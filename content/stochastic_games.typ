@@ -70,7 +70,7 @@ For the finite-horizon version, truncate the sum at $t=H-1$ and restrict the tra
 In particular, $u_i \( pi_1 \, ... \, pi_m \)$ is the expected discounted utility of player $i$ under the random trajectory which starts at $s^(\( 0 \)) ~ vmu$ and is sampled by having each player sampling an action from their policy at each state, and having the environment transition according to its dynamics. In terms of these utilities, Nash equilibrium is defined in the natural way as follows. Notice that this  definition generalizes the concept of Nash equilibrium in normal-form games.
 
 #definition[Nash equilibrium][
-  A collection of policies $pi = \( pi_1 \, ... \, pi_m \)$ is a _Nash equilibrium_ of a stochastic game iff for all players $i$, for all policies $pi' : S times (S times A)^(*) -> Delta (A_i)$ it holds that
+  A collection of policies $pi = \( pi_1 \, ... \, pi_m \)$ is a _Nash equilibrium_ of a stochastic game iff for all players $i$, for all policies $pi'_i : S times (S times A)^(*) -> Delta (A_i)$ it holds that
 
   $ u_i \( pi_i med \; med pi_(- i) \) >= u_i \( pi'_i med \; med pi_(- i) \) . $
 
