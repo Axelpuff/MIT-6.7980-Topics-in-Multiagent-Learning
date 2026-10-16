@@ -223,6 +223,71 @@ Finally, we remark that in finite-horizon games, there typically do not exist Na
   The previous condition is the Bellman equation for the MDP. From the theory of MDPs, we conclude that $pi_i^(*)$ is an optimal policy in the MDP, even among history-dependent policies. Therefore $pi_i^(*)$ is a best response to $pi_(- i)^(*)$, even among history-dependent policies.
 ]
 
+#exercise[History-dependent deviations from stationary profiles][
+  Suppose a stationary Markov profile $pi$ satisfies $q_i^pi (s, a_i) <= v_i^pi (s) + epsilon.alt$ for every player $i$, state $s in S$, and action $a_i in A_i$. Show that
+  $ u_i (pi'_i, pi_(-i)) <= u_i (pi) + epsilon.alt / (1 - gamma) $
+  for every player $i$ and every, not necessarily stationary or Markovian, policy $pi'_i$. Use this to show directly that~(#ref(label("eq:one state deviations weak"), supplement: none)) rules out all history-dependent deviations in the theorem above.
+] <ex-history-dependent-deviations>
+
+// TODO: add prose between the steps.
+#solution[
+  Note that the assumption is equivalent to $q_i^pi (s, a_i) - v_i^pi (s) <= epsilon.alt$. The basic idea is to express the difference between the deviating utility and the on-policy utility as a sum $sum_(t >= 0) gamma^t (q_i^pi (s^((t)), a_i^((t))) - v_i^pi (s^((t)))) <= sum_(t >= 0) gamma^t epsilon.alt = epsilon.alt / (1 - gamma)$.
+
+  Let $v_i^pi \( s \)$  and $q_i^pi (s \, a_i)$ be defined as in the proof of Theorem S6.7,, and let  $s^((t)), a^((t))$ denote the state and action of the deviating player $i$ at step $t$. Let $r_t = r_i (s^((t)), a^((t)))$ denote the reward earned earned at step $t$, $v_t = v_i^pi (s^((t)))$ denote the value of policy $pi$ starting at step $t$, and $h_t = (s^((0)), a^((0)), ..., s^((t)))$ denote the history up to step $t$.
+  
+  $
+    r_t := r_i (s^((t)), a^((t))), quad v_t := v_i^pi (s^((t))), quad h_t := (s^((0)), a^((0)), ..., s^((t))), quad R := max_(s, a) abs(r_i (s, a))
+  $
+
+  Using the Markov property, we can show that with $q_i^pi (s^((t)), a_i^((t)))$ is the expectation of $r_t + gamma v_(t+1)$ conditioned on the history up to, and action chosen at, step $t$:
+
+  $
+    EE [r_t + gamma v_(t+1) mid(|) h_t, a_i^((t))] & = sum_(a_(-i)) pi_(-i) (a_(-i) | s^((t))) r_i (s^((t)), (a_i^((t)), a_(-i))) \
+    & quad + gamma sum_(a_(-i)) pi_(-i) (a_(-i) | s^((t))) sum_(s') ℙ (s' | s^((t)), (a_i^((t)), a_(-i))) v_i^pi (s') \
+    & = q_i^pi (s^((t)), a_i^((t)))
+  $
+
+  Similarly, $q_i^pi (s, a_i) - v_i^pi (s)$ is the expectation of $r_t + gamma v_(t+1) - v_t$ conditioned on the previous step.
+
+  $
+    EE [r_t + gamma v_(t+1) - v_t mid(|) h_t, a_i^((t))] = q_i^pi (s^((t)), a_i^((t))) - v_i^pi (s^((t))) <= epsilon.alt quad
+  $
+
+  From here the rest is algebraic machinery. (is there something deeper to explain without switching the entire proof?) We can start from the telescoping sum
+
+  $ sum_(t=0)^(T-1) gamma^t (gamma v_(t+1) - v_t) = gamma^T v_T - v_0 $
+
+  Then we can add $sum_(t=0)^(T-1) gamma^t r_t $, which is the total reward (utility?) from the deviating strategy:
+
+  $
+    sum_(t=0)^(T-1) gamma^t r_t - v_0 = sum_(t=0)^(T-1) gamma^t (r_t + gamma v_(t+1) - v_t) - gamma^T v_T
+  $
+
+  This relates the total rewards (utilities...?) to $r_t + gamma v_(t+1) - v_t$.
+
+  As $T$ goes to infinity, $gamma^T v_T$ disappears:
+
+  $ abs(v_t) <= R / (1 - gamma), quad abs(gamma^T v_T) <= gamma^T R / (1 - gamma) -> 0 $
+
+  Also, each element in the sum can be bounded above by $gamma^t$ times a constant:
+
+  $ abs(gamma^t (r_t + gamma v_(t+1) - v_t)) <= gamma^t (R + (1 + gamma) R / (1 - gamma)) = gamma^t (2 R) / (1 - gamma) $
+
+  This geometric series converges, so by dominated convergence the right-hand sum converges.
+
+  Then we can take the expectation of each side. The left side becomes 
+
+  $
+    EE [sum_(t=0)^(T-1) gamma^t r_t] - EE [v_0]
+    & =  EE [sum_(t >= 0) gamma^t (r_t + gamma v_(t+1) - v_t)] \
+    u_i (pi'_i, pi_(-i)) - u_i (pi)
+    & = sum_(t >= 0) gamma^t EE [r_t + gamma v_(t+1) - v_t] \
+    u_i (pi'_i, pi_(-i)) - u_i (pi) &<= sum_(t >= 0) gamma^t epsilon.alt = epsilon.alt / (1 - gamma)
+  $
+
+  Using (#ref(label("eq:one state deviations weak"), supplement: none)), we know that $epsilon = 0$, so $u_i (pi'_i, pi_(-i)^(*)) <= u_i (pi^(*))$ for all possible deviating players $i$ and strategies $pi_i'$.
+]
+
 == Shapley's theorem for two-player zero-sum Markov games
 
 In this section, we turn our attention to _two-player zero-sum_ stochastic games. These are games where the interests of the two players are strictly opposed, i.e., $r_1 \( s \, a \) = - r_2 \( s \, a \)$ for all states $s$ and action profiles $a$. We typically denote $r \( s \, a \) := r_1 \( s \, a \)$ as the reward for Player 1 (the maximizer) and the cost for Player 2 (the minimizer).
