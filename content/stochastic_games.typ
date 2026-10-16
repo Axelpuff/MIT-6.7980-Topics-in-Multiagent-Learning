@@ -234,10 +234,6 @@ Finally, we remark that in finite-horizon games, there typically do not exist Na
   Note that the assumption is equivalent to $q_i^pi (s, a_i) - v_i^pi (s) <= epsilon.alt$. The basic idea is to express the difference between the utility of the deviation, $u_i (pi'_i, pi_(-i))$, and the utility of $pi$, $u_i (pi)$, as an expected sum $EE [sum_(t >= 0) gamma^t (q_i^pi (s^((t)), a_i^((t))) - v_i^pi (s^((t))))] <= sum_(t >= 0) gamma^t epsilon.alt = epsilon.alt / (1 - gamma)$.
 
   Let $v_i^pi \( s \)$ and $q_i^pi (s \, a_i)$ be defined as in the proof of #ref(<thm-takahashi-fink>), and let $s^((t)), a^((t))$ denote the state and action profile at step $t$ when player $i$ deviates to $pi'_i$. Let $r_t = r_i (s^((t)), a^((t)))$ denote the reward player $i$ earns at step $t$, $v_t = v_i^pi (s^((t)))$ denote the value, for player $i$, of following $pi$ from state $s^((t))$, and $h_t = (s^((0)), a^((0)), ..., s^((t)))$ denote the history up to step $t$.
-  
-  $
-    r_t := r_i (s^((t)), a^((t))), quad v_t := v_i^pi (s^((t))), quad h_t := (s^((0)), a^((0)), ..., s^((t))), quad R := max_(s, a) abs(r_i (s, a))
-  $
 
   Using the Markov property, we can show that $q_i^pi (s^((t)), a_i^((t)))$ is the expectation of $r_t + gamma v_(t+1)$ conditioned on the history up to step $t$ and player $i$'s action at step $t$:
 
@@ -267,7 +263,7 @@ Finally, we remark that in finite-horizon games, there typically do not exist Na
 
   This relates the discounted reward to the per-step terms $r_t + gamma v_(t+1) - v_t$.
 
-  As $T$ goes to infinity, $gamma^T v_T$ disappears:
+  Let $R = max_(s, a) abs(r_i (s, a))$. As $T$ goes to infinity, $gamma^T v_T$ disappears:
 
   $ abs(v_t) <= R / (1 - gamma), quad abs(gamma^T v_T) <= gamma^T R / (1 - gamma) -> 0 $
 
