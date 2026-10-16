@@ -229,7 +229,6 @@ Finally, we remark that in finite-horizon games, there typically do not exist Na
   for every player $i$ and every, not necessarily stationary or Markovian, policy $pi'_i$. Use this to show directly that~(#ref(label("eq:one state deviations weak"), supplement: none)) rules out all history-dependent deviations in #ref(<thm-takahashi-fink>).
 ] <ex-history-dependent-deviations>
 
-// TODO: add prose between the steps.
 #solution[
   Note that the assumption is equivalent to $q_i^pi (s, a_i) - v_i^pi (s) <= epsilon.alt$. The basic idea is to express the difference between the utility of the deviation, $u_i (pi'_i, pi_(-i))$, and the utility of $pi$, $u_i (pi)$, as an expected sum $EE [sum_(t >= 0) gamma^t (q_i^pi (s^((t)), a_i^((t))) - v_i^pi (s^((t))))] <= sum_(t >= 0) gamma^t epsilon.alt = epsilon.alt / (1 - gamma)$.
 
