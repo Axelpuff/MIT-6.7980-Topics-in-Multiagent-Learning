@@ -394,21 +394,21 @@ Simple stochastic games, studied by #citet(<condon1992stochastic>), form a diffe
   *4. Including time in the state.*
   Define an expanded finite-horizon game with the same action sets, horizon $H=2$, and discount factor $gamma=1$. Its state space and initial distribution are
   $
-    tilde(S) = (S times {0,1}) union {dagger},
+    tilde(S) = (S times {0,1}) union {bot},
     quad tilde(mu)((s,0)) = 1,
   $
-  where $dagger$ is a terminal state and all other initial probabilities are $0$. At an expanded state $(x,t)$, for $x in S$ and $t in {0,1}$, keep the original immediate rewards:
+  where $bot$ is a terminal state and all other initial probabilities are $0$. At an expanded state $(x,t)$, for $x in S$ and $t in {0,1}$, keep the original immediate rewards:
   $ tilde(r)_i ((x,t),a) = r_i (x,a). $
   For $t=0$, carry the original transition to the next time layer:
   $ tilde(ℙ)((y,1) \| (x,0),a) = ℙ(y \| x,a) quad (x,y in S). $
-  From any $(x,1)$, move to $dagger$ with probability $1$. At $dagger$, all rewards are $0$ and the state remains $dagger$. These rules specify every state and action; all unlisted transition probabilities are $0$. The transition after stage $1$ occurs after the final reward and contributes no further utility.
+  From any $(x,1)$, move to $bot$ with probability $1$. At $bot$, all rewards are $0$ and the state remains $bot$. These rules specify every state and action; all unlisted transition probabilities are $0$. The transition after stage $1$ occurs after the final reward and contributes no further utility.
 
   In the expanded game, Player 1 can use the stationary deterministic policy that selects
   $
     tilde(pi)_1^*(x,t) =
       cases(e & "if " x=s " and " t=1,
             c & "otherwise"),
-    quad tilde(pi)_1^*(dagger)=c,
+    quad tilde(pi)_1^*(bot)=c,
   $
   where selecting an action means assigning it probability $1$. Player 2 always selects $d$. This is a function of the expanded state alone. It continues at $(s,0)$ and exits at $(s,1)$, achieving the same total reward $3$.
 
