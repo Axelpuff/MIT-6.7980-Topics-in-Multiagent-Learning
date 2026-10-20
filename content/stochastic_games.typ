@@ -126,7 +126,22 @@ If we are content with non-Markovian strategies, a finite-horizon stochastic gam
 
   $ pi_i^(>= t + 1) := \( pi_i \( s \, tau \) \( dot.op \) \)_(s in S \, tau >= t + 1) \, $
 
-  is optimal for player $i$ to continue the game with against the policies of the other players if the player finds himself at some state $s$ at  time $t + 1$. The induction step is showing that under the induction hypothesis, $pi_i^(>= t)$ is optimal for continuing the game with against the policies of the other players if the player finds himself at some state $s$ at  time $t$. To show the inductive step we will use the definition of the game in Step~#link(label("algorithm step: game definition"))[2.2.1] of the algorithm and the Nash equilibrium properties of the strategies picked in Step~#link(label("algorithm step: pick Nash in backwards induction"))[2.2.2]. We leave the complete details to the reader.
+  is optimal for player $i$ to continue the game with against the policies of the other players if the player finds himself at some state $s$ at  time $t + 1$. 
+  
+  The induction step is showing that under the induction hypothesis, $pi_i^(>= t)$ is optimal for continuing the game with against the policies of the other players if the player finds himself at some state $s$ at  time $t$. This can be done by supposing that player $i$ contemplates an alternative policy $pi'_i$, consisting of an alternative action distribution $pi'_i (dot.op | s, t)$ for the current step, and an arbitrary continuation strategy $(pi'_i) ^(>=t+1)$ for the future. The expected total utility of this deviated policy against opponents' fixed policies is:
+
+  $
+    U' &= sum_(a_i, a_(- i)) pi'_i (a_i | s, t) pi_(- i) (a_(- i) | s, t) [r_i (s, a_i ) + gamma sum_(s') ℙ (s' | s, a_i) dot u_(i,t+1)((pi'_i)^(>=t+1), pi_(- i)^(>=t+1) | s')] \
+    &<= sum_(a_i, a_(- i)) pi'_i (a_i | s, t) pi_(- i) (a_(- i) | s, t) [r_i (s, a_i ) + gamma sum_(s') ℙ (s' | s, a_i) dot u_(i,t+1)(pi_i^(>=t+1), pi_(- i)^(>=t+1) | s')] \
+    &= sum_(a_i, a_(- i)) pi'_i (a_i | s, t) pi_(- i) (a_(- i) | s, t) [r_i (s, a_i ) + gamma sum_(s') ℙ (s' | s, a_i) dot V_(i,t+1)(s')] 
+  $
+  where we have used the inductive hypothesis (on the optimality of $pi_i^(>=t+1)$) in obtaining the inequality, and used the definition of $V_(i,t+1)$ in the last line. Then, according to Step~#link(label("algorithm step: game definition"))[2.2.1] of the algorithm, the bracketed expression is exactly the formula used to define the payoff $U_(i,t,s)(a)$ of the hypothetical local normal-form game at state $s$ and time $t$. Therefore, 
+
+  $
+    U' &<= EE_(a_i ~pi'_i (dot.op | s, t), a_(- i) ~ pi_(- i) (dot.op | s, t)) [ U_(i,t,s)(a) ] \
+    &<= EE_(a_i ~pi_i (dot.op | s, t), a_(- i) ~ pi_(- i) (dot.op | s, t)) [ U_(i,t,s)(a) ] = u_i (pi_i^(>=t), pi_(- i)^(>=t) | s) = V_(i,t)(s) .
+  $
+  since, in a Nash equilibrium (as we have selected in Step~#link(label("algorithm step: pick Nash in backwards induction"))[2.2.2]), player $i$ cannot improve their payoff by unilaterally changing their action distribution from $pi_i (dot.op | s,t)$ to $pi'_i (dot.op | s,t)$. Thus, this shows that $pi_i^(>=t)$ is indeed a best response to $pi_(- i)^(>=t)$, concluding the induction step.
 ]
 
 Finally, we remark that in finite-horizon games, there typically do not exist Nash equilibria in stationary and Markovian policies, because the best response of a player to the policies of the other players, even if all other players use stationary and Markovian policies, typically depends on the number of interaction steps that remain. In infinite-horizon games, however, equilibria in stationary and Markovian policies do exist, as we show in the next section.
