@@ -178,7 +178,7 @@ Finally, we remark that in finite-horizon games, there typically do not exist Na
 
     $ vv_i^pi = (I - gamma Gamma^pi)^(- 1) vr_i^pi . $
 
-    Furthermore, the value vectors $vv_i^pi$ are _continuous_ in the policies $pi$, because the inverse matrix of $I - gamma Gamma^pi$ is continuous in the values of the entries, and these are continuous in $pi$.
+    It follows that the value vectors $vv_i^pi$ are _continuous_ in the policies $pi$, because the inverse matrix of $I - gamma Gamma^pi$ is continuous in the values of the entries, and these are continuous in $pi$.
   - $q_i^pi (s \, a_i)$, for $s in S$ and $a_i in A_i$, is the infinite discounted utility of player $i$ if the game started at state $s$, and players used policies $pi_1 \, ... \, pi_m$, with the only exception that the very first action of player $i$ is set to $a_i$. In symbols,
 
     $
